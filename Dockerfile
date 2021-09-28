@@ -5,10 +5,10 @@ FROM python:3.7.8-slim
 
 MAINTAINER heumsi@gmail.com
 
-RUN yum -y update && \
-    yum install -y vim && \
-    yum install -y telnet && \
-    yum install -y wget
+RUN yum -y update
+RUN yum install -y vim
+RUN yum install -y telnet
+RUN yum install -y wget
 
 RUN python -m pip install --upgrade pip
 
