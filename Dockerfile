@@ -1,34 +1,20 @@
-# Version JDK8
+# Dockerfile
 
-FROM centos:7
-MAINTAINER Gaurav Agarwal, ohrohi@gmail.com
+FROM python:3.7.8-slim
 
-RUN yum install -y java-1.8.0-openjdk-devel wget git maven
+MAINTAINER heumsi@gmail.com
 
-# Create users and groups
-RUN groupadd tomcat
-RUN mkdir /opt/tomcat
-RUN useradd -s /bin/nologin -g tomcat -d /opt/tomcat tomcat
+RUN yum -y update && \
+    yum install -y vim && \
+    yum install -y telnet && \
+    yum install -y wget
 
-# Download and install tomcat
-RUN wget http://apache.tt.co.kr/tomcat/tomcat-8/v8.0.52/bin/apache-tomcat-8.0.52.tar.gz
-RUN tar -zxvf apache-tomcat-8.0.52.tar.gz -C /opt/tomcat --strip-components=1
-RUN chgrp -R tomcat /opt/tomcat/conf
-RUN chmod g+rwx /opt/tomcat/conf
-RUN chmod g+r /opt/tomcat/conf/*
-RUN chown -R tomcat /opt/tomcat/logs/ /opt/tomcat/temp/ /opt/tomcat/webapps/ /opt/tomcat/work/
-RUN chgrp -R tomcat /opt/tomcat/bin
-RUN chgrp -R tomcat /opt/tomcat/lib
-RUN chmod g+rwx /opt/tomcat/bin
-RUN chmod g+r /opt/tomcat/bin/*
+RUN python -m pip install --upgrade pip
 
-RUN rm -rf /opt/tomcat/webapps/*
-RUN cd /tmp && git clone https://github.com/DEV3L/java-mvn-hello-world-web-app.git
-RUN cd /tmp/java-mvn-hello-world-web-app && mvn clean install
-RUN cp /tmp/java-mvn-hello-world-web-app/target/mvn-hello-world.war /opt/tomcat/webapps/ROOT.war
-RUN chmod 777 /opt/tomcat/webapps/ROOT.war
+COPY . /app
+WORKDIR /app
 
-VOLUME /opt/tomcat/webapps
-EXPOSE 8080
-CMD ["/opt/tomcat/bin/catalina.sh", "run"]
-#
+ENTRYPOINT ["python"]
+CMD ["app.py"]
+
+EXPOSE 5000
