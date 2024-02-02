@@ -1,7 +1,7 @@
 # Dockerfile
 # PLZ test success!!!
 
-FROM python:3.7.8-slim
+FROM python:3.13.0a3-slim
 
 MAINTAINER heumsi@gmail.com
 
