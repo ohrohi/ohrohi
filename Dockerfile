@@ -3,8 +3,6 @@
 
 FROM python:3.7.8-slim
 
-MAINTAINER heumsi@gmail.com
-
 RUN yum install -y vim
 RUN yum install -y telnet
 RUN yum install -y wget
