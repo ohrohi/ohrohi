@@ -1,7 +1,7 @@
 # Dockerfile
 # PLZ test success!!!
 
-FROM python:3.7.8-slim
+FROM python:3.13.0b1-slim
 
 RUN yum install -y vim
 RUN yum install -y telnet
